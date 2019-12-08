@@ -10,7 +10,6 @@ import java.util.Date;
  * @Date: 2019/12/5 17:40
  * @Description:
  */
-@Data
 public class MachineForQueryByMachineCodeVO {
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy/MM/dd HH:mm:ss")
@@ -18,4 +17,27 @@ public class MachineForQueryByMachineCodeVO {
     private String machineCode;
     private int isExpired;//0已过期，1未过期
 
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getMachineCode() {
+        return machineCode;
+    }
+
+    public void setMachineCode(String machineCode) {
+        this.machineCode = machineCode;
+    }
+
+    public int getIsExpired() {
+        return isExpired;
+    }
+
+    public void setIsExpired(int isExpired) {
+        this.isExpired = isExpired;
+    }
 }

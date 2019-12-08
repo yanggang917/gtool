@@ -13,4 +13,69 @@
             a.machine_code = #{machineCode}
     </select>
 
+    <select id="queryList" resultType="com.cn.gtool.bean.entity.MachineDO">
+        SELECT
+            a.end_time endTime,
+            a.machine_code machineCode,
+            a.machine_name machineName,
+            a.create_time createTime,
+            a.id,
+            a.user_id userId,
+            a.del_flag
+        FROM
+            t_machine a
+        WHERE
+            a.user_id = #{userId}
+        and a.del_flag = 0
+        order by a.create_time desc
+        limit #{offset},#{size}
+    </select>
+
+    <select id="queryListCount" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_machine a
+        WHERE
+            a.user_id = #{userId}
+        and a.del_flag = 0
+    </select>
+
+    <insert id="add" parameterType="com.cn.gtool.bean.entity.MachineDO">
+        insert into t_machine(
+          machine_code,
+          machine_name,
+          user_id,
+          create_time,
+          end_time
+        ) value (
+          #{machineCode},
+          #{machineName},
+          #{userId},
+          #{createTime},
+          #{endTime}
+        )
+    </insert>
+
+    <update id="updateEndTimeByCode" parameterType="com.cn.gtool.bean.entity.MachineDO">
+        update t_machine
+        set end_time = #{endTime}
+        where
+          machine_code = #{machineCode}
+    </update>
+
+    <insert id="addPayLog" parameterType="com.cn.gtool.bean.entity.UserPayLogDO">
+        insert into t_user_pay_log(
+          machine_code,
+          user_id,
+          create_time,
+          pay_code
+        ) value (
+          #{machineCode},
+          #{userId},
+          #{createTime},
+          #{payCode}
+        )
+    </insert>
+
 </mapper>

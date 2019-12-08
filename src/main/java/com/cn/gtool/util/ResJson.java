@@ -45,6 +45,7 @@ public class ResJson {
     private String retDesc;
 
     private Object retData;
+    private int total;
 
     /**
      * default successful
@@ -65,6 +66,13 @@ public class ResJson {
         this.retStatus = retStatus;
         this.retDesc = retDesc;
         this.retData = retData;
+    }
+
+    public ResJson(int retStatus, String retDesc, Object retData, int total) {
+        this.retStatus = retStatus;
+        this.retDesc = retDesc;
+        this.retData = retData;
+        this.total = total;
     }
 
     public boolean isSuccess() {
@@ -144,6 +152,10 @@ public class ResJson {
 
     public static ResJson success(Object retData) {
         return new ResJson(STATUS_SUCCESS, DESC_SUCCESS, retData);
+    }
+
+    public static ResJson success(Object retData, int total) {
+        return new ResJson(STATUS_SUCCESS, DESC_SUCCESS, retData, total);
     }
 
     public static ResJson success(Object retData, String msg) {

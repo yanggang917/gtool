@@ -1,55 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>若涵</title>
+    <link href="lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+    <script src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script src="lib/ligerUI/js/core/base.js" type="text/javascript"></script>
+    <script src="lib/ligerUI/js/ligerui.min.js" type="text/javascript"></script>
+    <script src="lib/ligerUI/js/plugins/ligerForm.js" type="text/javascript"></script>
+    <script src="lib/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
+    <script src="lib/ligerUI/js/plugins/ligerButton.js" type="text/javascript"></script>
+    <script src="lib/ligerUI/js/plugins/ligerTip.js" type="text/javascript"></script>
+    <script src="lib/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="lib/jquery-validation/jquery.metadata.js" type="text/javascript"></script>
+    <script src="js/indexdata.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/cookies.js"></script>
+    <script src="js/index.js" type="text/javascript"></script>
+
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
 </head>
-<link href="lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-    body{ padding:10px; margin:0;}
-    #layout1{  width:100%; margin:40px;  height:400px;
-        margin:0; padding:0;}
-    #accordion1 { height:270px;}
-    h4{ margin:20px;}
-</style>
-<body>
-
-    <div id="layout1" class="l-layout" ligeruiid="layout1" style="height: 248px;">
-    <div class="l-layout-left" style="left: 0px; width: 110px; top: 55px; height: 136px;"><div class="l-layout-header"><div class="l-layout-header-toggle"></div><div class="l-layout-header-inner"></div></div><div position="left" class="l-layout-content"></div></div>
-    <div class="l-layout-center" style="width: 890px; top: 55px; left: 115px; height: 136px;"><div class="l-layout-header">标题</div><div position="center" title="" class="l-layout-content" style="height: 111px;">
-        <h4>$("#layout1").ligerLayout(); </h4>
-        默认为固定layout的高度百分一百
-    </div></div>
-    <div class="l-layout-right" style="width: 170px; top: 55px; height: 136px; left: 1010px;"><div class="l-layout-header"><div class="l-layout-header-toggle"></div><div class="l-layout-header-inner"></div></div><div position="right" class="l-layout-content"></div></div>
-    <div class="l-layout-top" style="top: 0px; height: 50px;"><div position="top" class="l-layout-content"></div></div>
-    <div class="l-layout-bottom" style="height: 50px; top: 196px;"><div position="bottom" class="l-layout-content"></div></div>
-    <div class="l-layout-lock"></div><div class="l-layout-drophandle-left" style="display: block; left: 110px; height: 136px; top: 55px;"></div><div class="l-layout-drophandle-right" style="display: block; left: 1007px; height: 136px; top: 55px;"></div><div class="l-layout-drophandle-top" style="display: block; top: 50px; width: 1180px;"></div><div class="l-layout-drophandle-bottom" style="display: block; top: 193px; width: 1180px;"></div><div class="l-layout-dragging-xline"></div><div class="l-layout-dragging-yline"></div><div class="l-dragging-mask" style="height: 248px;"></div><div class="l-layout-collapse-left" style="display: none; top: 55px; height: 136px;"><div class="l-layout-collapse-left-toggle"></div></div><div class="l-layout-collapse-right" style="display: none; top: 55px; height: 136px;"><div class="l-layout-collapse-right-toggle"></div></div></div>
-
-    <div style="display:none;">
+<body style="padding:0px;background:#EAEEF5;">
+<div id="pageloading"></div>
+<div id="topmenu" class="l-topmenu">
+    <!--<img src="image/aaic_logo.png" alt="" class="l-topmenu-logo"/>-->
+    <span id="username" style="margin-left:20px;font-weight: bold;color:green;font-size: 16px;"></span>
+    <div class="l-topmenu-welcome">
+        <a style="color: #3dc655" href="#" class="l-link2" onclick="openPasswordDialog()">修改密码</a>
+        <span style="color: #3dc655" class="space">|</span>
+        <a style="color: #3dc655" href="#" class="l-link2" onclick="loginOut()">退出</a>
 
     </div>
+</div>
+<!-- 新增或修改用户框 -->
+<div id="updatePasswordDiv" style="width:500px;height:400px; margin:3px; display:none;">
+    <h3>修改用户信息</h3>
+    <hr style='width:100%;'></hr>
+    <div>
+        <form id="userpasswordForm" name="userpasswordForm">
+            <center>
+                <input type="hidden" id="user_id" name="id" class="l-text-field" ligeruiid="Title" >
+                <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+                    <tr>
+                        <td align="right" class="l-table-edit-td"> 原密码:</td>
+                        <td align="left" class="l-table-edit-td" style="width:160px"><input class="inputName" name="oldpassword" type="password" id="oldPassword" ltype="text" validate="{required:true}" /></td>
+                        <td align="left" class="requiredItem">*</td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="l-table-edit-td"> 新密码:</td>
+                        <td align="left" class="l-table-edit-td" style="width:160px"><input class="inputName" name="newpassword" type="password" id="newPassword" ltype="text" validate="{required:true}" /></td>
+                        <td align="left" class="requiredItem">*</td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="l-table-edit-td"> 确认密码:</td>
+                        <td align="left" class="l-table-edit-td" style="width:160px"><input class="inputName" name="repeatPassword" type="password" id="repeatPassword" ltype="text" validate="{required:true}" /></td>
+                        <td align="left" class="requiredItem">*</td>
+                    </tr>
+                </table><br />
+                <input type="submit" value="提交" id="Button1" class="l-button l-button-submit" style="margin-left: 100px;"/>
+                <input type="button" value="关闭" class="l-button" id="l-button-close" name="close" style="margin-left: 5px;"/>
+            </center>
+        </form>
+    </div>
+</div>
+<div id="layout1" style="width:99.2%; margin:0 auto; margin-top:4px; ">
+    <div position="left"  title="主要菜单" id="accordion1">
+        <div title="功能列表" class="l-scroll">
+            <ul id="tree1" style="margin-top:3px;">
+        </div>
+    </div>
+    <div position="center" id="framecenter">
+        <div tabid="home" title="我的主页" style="height:300px" >
+            <iframe frameborder="0" name="home" id="home" src="welcome.html"></iframe>
+        </div>
+    </div>
+    <!--<div position="right"  title="right菜单" id="accordion1">-->
+        <!--<ul id="tree2" style="margin-top:3px;">-->
+            <!--<li>1</li>-->
+            <!--<li>2</li>-->
+            <!--<li>3</li>-->
+        <!--</ul>-->
+    <!--</div>-->
 
+</div>
+<div  style="height:32px; line-height:32px; text-align:center;">
+    Copyright © 2019 - 2020 @若涵科技
+</div>
+<!-- <div style="display:none"><script src="http://s21.cnzz.com/stat.php?id=2970137&web_id=2970137" language="JavaScript"></script></div> -->
 </body>
-<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-<script src="lib/ligerUI/js/ligerui.min.js" type="text/javascript"></script>
-<script src="lib/ligerUI/js/core/base.js" type="text/javascript"></script>
-<script src="lib/ligerUI/js/plugins/ligerTextBox.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(function ()
-    {
-
-        $("#layout1").ligerLayout({
-            onLeftToggle: function (isColl)
-            {
-                alert(isColl ? "收缩" : "显示");
-            },
-            onRightToggle: function (isColl)
-            {
-                alert(isColl ? "收缩" : "显示");
-            },
-
-        });
-    });
-
-</script>
 </html>

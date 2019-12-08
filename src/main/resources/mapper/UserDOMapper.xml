@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.gtool.dao.UserDOMapper">
+
+
+    <select id="queryByNameAndPass" parameterType="com.cn.gtool.bean.entity.UserDO" resultType="com.cn.gtool.bean.entity.UserDO">
+        SELECT
+            a.create_time createTime,
+            a.id,
+            a.username,
+            a.password
+        FROM
+            t_user a
+        WHERE
+            a.username = #{username}
+        and a.password = #{password}
+    </select>
+
+    <select id="queryByName" parameterType="com.cn.gtool.bean.entity.UserDO" resultType="com.cn.gtool.bean.entity.UserDO">
+        SELECT
+            a.create_time createTime,
+            a.id,
+            a.username,
+            a.password
+        FROM
+            t_user a
+        WHERE
+            a.username = #{username}
+    </select>
+
+    <insert id="add" parameterType="com.cn.gtool.bean.entity.PayDO">
+        insert into t_user(
+          username,
+          password,
+          create_time
+        ) value (
+          #{username},
+          #{password},
+          #{createTime}
+        )
+    </insert>
+
+    <update id="updatePassword">
+        update
+          t_user
+        set
+          password = #{newPassword}
+        where
+            password = #{oldPassword}
+        and id = #{id}
+
+    </update>
+
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.gtool.dao.PayDOMapper">
+
+
+    <select id="queryByPayCode" resultType="com.cn.gtool.bean.entity.PayDO">
+        SELECT
+            a.day_length dayLength,
+            a.pay_code payCode,
+            a.create_time createTime,
+            a.use_time useTime,
+            a.id,
+            a.user_id userId,
+            a.is_used isUsed
+        FROM
+            t_pay a
+        WHERE
+            a.pay_code = #{payCode}
+    </select>
+
+    <select id="queryList" resultType="com.cn.gtool.bean.entity.PayDO">
+        SELECT
+            a.day_length dayLength,
+            a.pay_code payCode,
+            a.create_time createTime,
+            a.use_time useTime,
+            a.id,
+            a.user_id userId,
+            b.username userName,
+            a.is_used isUsed,
+            a.pay_type payType,
+            a.machine_name machineName
+        FROM
+            t_pay a
+        left join
+            t_user b on a.user_id = b.id
+        where 1=1
+        <if test="userId != 0">
+           and a.user_id = #{userId}
+        </if>
+        order by a.create_time desc
+        limit #{offset},#{size}
+    </select>
+
+    <select id="queryListCount" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            t_pay a
+        where 1=1
+        <if test="userId != 0">
+            and a.user_id = #{userId}
+        </if>
+    </select>
+
+    <insert id="add" parameterType="com.cn.gtool.bean.entity.PayDO">
+        insert into t_pay(
+          pay_code,
+          user_id,
+          create_time,
+          pay_type,
+          day_length
+        ) value (
+          #{payCode},
+          #{userId},
+          #{createTime},
+          #{payType},
+          #{dayLength}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.cn.gtool.bean.entity.PayDO">
+        update
+          t_pay
+        set
+          is_used = 1,
+          use_time = #{useTime},
+          machine_code = #{machineCode},
+          machine_name = #{machineName}
+        where
+          pay_code = #{payCode}
+
+    </update>
+
+    <select id="queryListForUsable" resultType="com.cn.gtool.bean.entity.PayDO">
+        SELECT
+            a.day_length dayLength,
+            a.pay_code payCode,
+            a.create_time createTime,
+            a.use_time useTime,
+            a.id,
+            a.user_id userId,
+            b.username userName,
+            a.is_used isUsed,
+            a.pay_type payType,
+            a.machine_name machineName
+        FROM
+            t_pay a
+        left join
+            t_user b on a.user_id = b.id
+        where
+            a.is_used = 0
+        and a.user_id = #{userId}
+        order by a.create_time desc
+        limit 10
+    </select>
+
+</mapper>
