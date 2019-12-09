@@ -135,12 +135,13 @@ public class MachineController {
     public ResJson updateEndTime(@RequestBody UpdateMachineEndDateDTO updateMachineEndDateDTO) {
         MachineForQueryByMachineCodeVO machineForQueryByMachineCode = this.machineService.queryByMachineCode(updateMachineEndDateDTO.getMachineCode());
 
-        PayDO payDO = this.payService.queryByPayCode(updateMachineEndDateDTO.getPayCode());
+        //校验该用户是否拥有这张支付卡
+        PayDO payDO = this.payService.queryByPayCodeAndUserId(updateMachineEndDateDTO);
         if (payDO == null){
-            return ResJson.failed("该支付码不存在！");
+            return ResJson.failed("对不起，您没有这个支付码！");
         }
         if (payDO.getIsUsed() == 1){
-            return ResJson.failed("该支付码已经被使用了，请联系管理员！");
+            return ResJson.failed("对不起，您这个支付码已经被使用了，请联系管理员！");
         }
 
         MachineDO machineDO = new MachineDO();
