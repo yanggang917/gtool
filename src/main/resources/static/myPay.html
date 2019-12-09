@@ -46,5 +46,37 @@
 <div class="l-clear"></div>
 <div id="payTable"></div>
 
+<div id="target1" style="width:400px;height:400px; margin:3px; display:none;">
+    <h3>支付码转让</h3>
+    <hr style='width:100%;'></hr>
+    <div>
+        <form id="payForm" name="form1">
+            <input type="hidden" id="id" name="id" class="l-text-field" ligeruiid="Title" style="width: 174px;">
+            <table cellpadding="0" cellspacing="0" class="l-table-edit" >
+                <tr>
+                    <td align="right" class="l-table-edit-td"> 支付码：</td>
+                    <td align="left" class="l-table-edit-td" style="width:160px"><input name="payCode" type="text" id="payCode" ltype="text" validate="{required:true}" /></td>
+                    <td align="left" class="requiredItem">*</td>
+                </tr>
+                <tr>
+                    <td align="right" class="l-table-edit-td"> 卡类：</td>
+                    <td align="left" class="l-table-edit-td" style="width:160px"><input name="payType" type="text" id="payType" ltype="text" validate="{required:true}" /></td>
+                    <td align="left" class="requiredItem">*</td>
+                </tr>
+                <tr>
+                    <td align="right" class="l-table-edit-td"> 转让人：</td>
+                    <td align="left" class="l-table-edit-td" style="width:160px"><input name="userName" type="text" id="userName" ltype="text" validate="{required:true}" /></td>
+                    <td align="left" class="requiredItem">*</td>
+                </tr>
+            </table>
+
+
+            <input type="submit" value="提交" id="Button1" class="l-button l-button-submit"/>
+            <input type="button" value="关闭" class="l-button" id="l-button-close" name="close" style="margin-left: 15px;"/>
+        </form>
+    </div>
+</div>
+
+
 </body>
 </html>

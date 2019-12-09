@@ -106,6 +106,15 @@ public class PayController {
     @RequestMapping(value = "/zr", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public ResJson update(@RequestBody PayDO payDO) {
+        //校验用户是否存在
+        UserDO params = new UserDO();
+        params.setUsername(payDO.getUserName());
+        UserDO userDO = this.userService.queryByName(params);
+        if (userDO == null){
+            return ResJson.failed("您要转让的用户不存在，请检查是否填写有误！");
+        }
+
+        payDO.setUserId(userDO.getId());
         this.payService.update(payDO);
 
         //添加支付码流水

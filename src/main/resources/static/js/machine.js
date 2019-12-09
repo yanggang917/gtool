@@ -95,7 +95,6 @@ function initFormCheck()
         {
             $("form .l-text,.l-textarea").ligerHideTip();
             addMachine();
-            ligerDialogDiv.hide();
         }
     });
     $("form").ligerForm();
@@ -207,6 +206,7 @@ function addMachine(){
                 grid.reload();
                 var tip = $.ligerDialog.tip({ title: '提示信息', content: '记录已经更新成功！',height:150 });
                 setTimeout(function () { tip.close(); }, 5000);
+                ligerDialogDiv.hide();
             }else {
                 $.ligerDialog.warn(resp.retDesc);
             }
