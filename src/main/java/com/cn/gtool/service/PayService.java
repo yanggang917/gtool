@@ -1,5 +1,6 @@
 package com.cn.gtool.service;
 
+import com.cn.gtool.bean.dto.AddMachineDTO;
 import com.cn.gtool.bean.entity.PayDO;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface PayService {
     int queryListCount(int userId);
 
     List<PayDO> queryListForUsable(int userId);
+
+    PayDO queryByPayCodeAndUserId(AddMachineDTO addMachineDTO);
 }

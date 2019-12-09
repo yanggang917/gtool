@@ -52,6 +52,11 @@ public class MachineController {
         return ResJson.success(machineDOList, count);
     }
 
+    /**
+     * 添加机器码
+     * @param addMachineDTO
+     * @return
+     */
     @RequestMapping(value = "/add", method = {RequestMethod.POST})
     @ResponseBody
     public ResJson add(@RequestBody AddMachineDTO addMachineDTO) {
@@ -60,12 +65,13 @@ public class MachineController {
             return ResJson.failed(-1, "该机器码已经存在！");
         }
 
-        PayDO payDO = this.payService.queryByPayCode(addMachineDTO.getPayCode());
+        //校验该用户是否拥有这张支付卡
+        PayDO payDO = this.payService.queryByPayCodeAndUserId(addMachineDTO);
         if (payDO == null){
-            return ResJson.failed(-1, "该支付码不存在！");
+            return ResJson.failed(-1, "对不起，您没有这个支付码！");
         }
         if (payDO.getIsUsed() == 1){
-            return ResJson.failed(-1, "该支付码已经被使用了，请联系管理员！");
+            return ResJson.failed(-1, "对不起，您这个支付码已经被使用了，请联系管理员！");
         }
 
 
@@ -80,37 +86,43 @@ public class MachineController {
         this.machineService.add(machineDO);
 
         //更新该支付码已被使用啦
-        updatePayCode(addMachineDTO);
-
-        //add log
-        addPayLog(addMachineDTO,date);
+        updatePayCode(addMachineDTO, date);
 
         return ResJson.success();
     }
 
-    private void addPayLog(AddMachineDTO addMachineDTO, Date date){
+    /**
+     * 一个支付码的成长轨迹
+     * @param addMachineDTO
+     * @param date
+     */
+    public void addPayLog(AddMachineDTO addMachineDTO, Date date, int status){
         UserPayLogDO userPayLogDO = new UserPayLogDO();
         userPayLogDO.setUserId(addMachineDTO.getUserId());
         userPayLogDO.setCreateTime(date);
         userPayLogDO.setMachineCode(addMachineDTO.getMachineCode());
         userPayLogDO.setPayCode(addMachineDTO.getPayCode());
+        userPayLogDO.setStatus(status);
         machineService.addPayLog(userPayLogDO);
-
     }
 
     /**
      * 消费一张支付码
      * @param addMachineDTO
      */
-    private void updatePayCode(AddMachineDTO addMachineDTO) {
+    private void updatePayCode(AddMachineDTO addMachineDTO, Date date) {
         PayDO param = new PayDO();
         param.setIsUsed(1);//已经使用
         param.setPayCode(addMachineDTO.getPayCode());
-        param.setUseTime(new Date());
+        param.setUseTime(date);
         param.setMachineName(addMachineDTO.getMachineName());
         param.setMachineCode(addMachineDTO.getMachineCode());
         param.setUserId(addMachineDTO.getUserId());
+        param.setIsUsed(1);//使用了
         this.payService.update(param);
+
+        //add log
+        addPayLog(addMachineDTO, date, 2);//被使用了
     }
 
     /**
@@ -146,10 +158,7 @@ public class MachineController {
         this.machineService.updateEndTimeByCode(machineDO);
 
         //更新支付码状态
-        updatePayCode(updateMachineEndDateDTO);
-
-        //add log
-        addPayLog(updateMachineEndDateDTO,date);
+        updatePayCode(updateMachineEndDateDTO, date);
 
         return ResJson.success();
     }

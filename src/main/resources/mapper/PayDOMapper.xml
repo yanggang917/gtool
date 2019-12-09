@@ -72,12 +72,23 @@
     <update id="update" parameterType="com.cn.gtool.bean.entity.PayDO">
         update
           t_pay
-        set
-          is_used = 1,
-          use_time = #{useTime},
-          machine_code = #{machineCode},
-          machine_name = #{machineName},
-          user_id = #{userId}
+        <set>
+            <if test="isUsed != 0">
+                is_used = #{isUsed},
+            </if>
+            <if test="useTime != null">
+                use_time = #{useTime},
+            </if>
+            <if test="machineCode != null">
+                machine_code = #{machineCode},
+            </if>
+            <if test="machineName != null">
+                machine_name = #{machineName},
+            </if>
+            <if test="userId != 0">
+                user_id = #{userId},
+            </if>
+        </set>
         where
           pay_code = #{payCode}
 
@@ -105,5 +116,22 @@
         order by a.create_time desc
         limit 10
     </select>
+
+    <select id="queryByPayCodeAndUserId" parameterType="com.cn.gtool.bean.dto.AddMachineDTO" resultType="com.cn.gtool.bean.entity.PayDO">
+        SELECT
+            a.day_length dayLength,
+            a.pay_code payCode,
+            a.create_time createTime,
+            a.use_time useTime,
+            a.id,
+            a.user_id userId,
+            a.is_used isUsed
+        FROM
+            t_pay a
+        WHERE
+            a.pay_code = #{payCode}
+        and a.user_id = #{userId}
+    </select>
+
 
 </mapper>

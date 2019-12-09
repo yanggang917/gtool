@@ -69,12 +69,14 @@
           machine_code,
           user_id,
           create_time,
-          pay_code
+          pay_code,
+          status
         ) value (
           #{machineCode},
           #{userId},
           #{createTime},
-          #{payCode}
+          #{payCode},
+          #{status}
         )
     </insert>
 

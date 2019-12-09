@@ -1,8 +1,10 @@
 package com.cn.gtool.controller;
 
+import com.cn.gtool.bean.dto.AddMachineDTO;
 import com.cn.gtool.bean.dto.AddPayDTO;
 import com.cn.gtool.bean.entity.PayDO;
 import com.cn.gtool.bean.entity.UserDO;
+import com.cn.gtool.bean.entity.UserPayLogDO;
 import com.cn.gtool.service.PayService;
 import com.cn.gtool.service.UserService;
 import com.cn.gtool.util.ResJson;
@@ -21,6 +23,8 @@ public class PayController {
     private PayService payService;
     @Resource
     private UserService userService;
+    @Resource
+    private MachineController machineController;
 
     @RequestMapping(value = "/query-by-payCode", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
@@ -29,10 +33,16 @@ public class PayController {
         return ResJson.success(payDO);
     }
 
+    /**
+     * 生成支付码
+     * @param payDO
+     * @return
+     */
     @RequestMapping(value = "/add", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public ResJson add(@RequestBody AddPayDTO payDO) {
-        payDO.setCreateTime(new Date());
+        Date date = new Date();
+        payDO.setCreateTime(date);
         if (payDO.getPayType() ==1){//日卡
             payDO.setDayLength(1);
         }
@@ -54,11 +64,19 @@ public class PayController {
         payDO.setUserId(userDO.getId());
         //循环数量
         for (int i=0; i<payDO.getNum();i++){
-            payDO.setPayCode(UUID.randomUUID().toString().substring(24));
+            String payCode = UUID.randomUUID().toString().substring(24);
+            payDO.setPayCode(payCode);
             this.payService.add(payDO);
+
+            //添加支付码流水
+            AddMachineDTO addMachineDTO = new AddMachineDTO();
+            addMachineDTO.setPayCode(payCode);
+            addMachineDTO.setUserId(userDO.getId());
+            this.machineController.addPayLog(addMachineDTO, date, 0);//出生了
         }
         return ResJson.success(payDO);
     }
+
 
     @RequestMapping(value = "/query-list", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
@@ -80,10 +98,21 @@ public class PayController {
         return ResJson.success(payDOList);
     }
 
-    @RequestMapping(value = "/update", method = {RequestMethod.GET, RequestMethod.POST})
+    /**
+     * 转让支付码
+     * @param payDO
+     * @return
+     */
+    @RequestMapping(value = "/zr", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public ResJson update(@RequestBody PayDO payDO) {
         this.payService.update(payDO);
+
+        //添加支付码流水
+        AddMachineDTO addMachineDTO = new AddMachineDTO();
+        addMachineDTO.setPayCode(payDO.getPayCode());
+        addMachineDTO.setUserId(payDO.getUserId());
+        this.machineController.addPayLog(addMachineDTO, new Date(), 1);//转让
         return ResJson.success();
     }
 

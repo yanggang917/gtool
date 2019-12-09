@@ -1,5 +1,6 @@
 package com.cn.gtool.dao;
 
+import com.cn.gtool.bean.dto.AddMachineDTO;
 import com.cn.gtool.bean.entity.PayDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,4 +21,6 @@ public interface PayDOMapper {
     int queryListCount(int userId);
 
     List<PayDO> queryListForUsable(int userId);
+
+    PayDO queryByPayCodeAndUserId(AddMachineDTO addMachineDTO);
 }

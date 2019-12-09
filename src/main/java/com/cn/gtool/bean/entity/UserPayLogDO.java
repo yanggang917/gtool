@@ -9,6 +9,17 @@ public class UserPayLogDO {
     private int userId;
     private Date createTime;
 
+    //状态：0出生，1转让，2被使用
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

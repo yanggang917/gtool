@@ -1,5 +1,6 @@
 package com.cn.gtool.service.impl;
 
+import com.cn.gtool.bean.dto.AddMachineDTO;
 import com.cn.gtool.bean.entity.PayDO;
 import com.cn.gtool.dao.PayDOMapper;
 import com.cn.gtool.service.PayService;
@@ -42,5 +43,10 @@ public class PayServiceImpl implements PayService {
     @Override
     public List<PayDO> queryListForUsable(int userId) {
         return this.payDOMapper.queryListForUsable(userId);
+    }
+
+    @Override
+    public PayDO queryByPayCodeAndUserId(AddMachineDTO addMachineDTO) {
+        return this.payDOMapper.queryByPayCodeAndUserId(addMachineDTO);
     }
 }
