@@ -30,6 +30,7 @@ function openmachineDialog(machineId, machineCode, machineName) {
 
 function initSel() {
     var uid = getCookie("UID");
+    isNoTLogin(uid);
     var dd = "<select style='width: 178px; height: 21px; ' id=\"payCode\">";
 
     $.ajax({
@@ -147,6 +148,7 @@ function getmachineList(){
     ];
 
     var uid = getCookie("UID");
+    isNoTLogin(uid);
     grid = $("#machineTable").ligerGrid({
         url: "machine/query-list?userId="+uid,
         columns: coloModelList,
@@ -172,6 +174,8 @@ function getmachineList(){
 function addMachine(){
     var id = $("#machineId").val();
     var uid = getCookie("UID");
+    isNoTLogin(uid);
+
     var machineCode = $("#machineCode").ligerGetTextBoxManager().getValue();
     var machineName = $("#machineName").ligerGetTextBoxManager().getValue();
     var payCode = $("#payCode").val();

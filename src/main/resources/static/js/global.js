@@ -29,13 +29,16 @@ if (r!=null) return r[2]; return null;
 String.prototype.endWith=function(str){     
     var reg=new RegExp(str+"$");     
     return reg.test(this);        
-} 
+}
 
+/**
+ * ifame层页面跳转
+ * @param resp
+ */
 function isNoTLogin(resp){
-	if(resp.AAICGIS_IS_LOGIN==false){
+	if(resp==null){
 		alert("您还没有登录，请重新登录哦。");
-		window.location.href = "login.html";
-		return;
+		top.location.href = "login.html";
 	};
 }	
 

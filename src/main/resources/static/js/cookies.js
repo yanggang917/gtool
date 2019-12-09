@@ -7,7 +7,7 @@ function getCookie(sName)
     if (oRE.test(document.cookie)) {  
         return unescape(RegExp["$1"]);  
     } else {  
-        return null;  
+        return null;
     } 
 }
 /**
@@ -18,7 +18,10 @@ function getCookie(sName)
 function setCookie(name, value){
     var argv = arguments;
     var argc = arguments.length;
-    var expires = (argc > 2) ? argv[2] : null;
+    // var expires = (argc > 2) ? argv[2] : null;
+    var expires = new Date();
+    expires.setTime(expires.getTime() + 60 * 1000 * 30);//有效期30分钟
+
     var path = (argc > 3) ? argv[3] : '/';
     var domain = (argc > 4) ? argv[4] : null;
     var secure = (argc > 5) ? argv[5] : false;

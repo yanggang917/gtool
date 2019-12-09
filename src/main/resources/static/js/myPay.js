@@ -45,6 +45,7 @@ function getpayList(){
 
     ];
     var uid = getCookie("UID");
+    isNoTLogin(uid);
     grid = $("#payTable").ligerGrid({
         url: "pay/query-list?userId="+uid,
         columns: coloModelList,
