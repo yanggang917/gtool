@@ -8,7 +8,7 @@ function openmachineDialog(machineId, machineCode, machineName) {
     ligerDialogDiv = $.ligerDialog.open({ target: $("#target1") ,height:400,width:500});
 
     //初始化支付卡选择列表
-    initSel();
+    // initSel();
 
     // alert(machineId+machineName+machineCode);
     ////走修改逻辑
@@ -178,7 +178,8 @@ function addMachine(){
 
     var machineCode = $("#machineCode").ligerGetTextBoxManager().getValue();
     var machineName = $("#machineName").ligerGetTextBoxManager().getValue();
-    var payCode = $("#payCode").val();
+    var payCode = $("#payCode").ligerGetTextBoxManager().getValue();
+    // var payCode = $("#payCode").val();
 
     if (payCode==null){
         $.ligerDialog.warn("您当前还没有可用的支付码！");

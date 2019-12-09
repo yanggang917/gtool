@@ -76,7 +76,8 @@
           is_used = 1,
           use_time = #{useTime},
           machine_code = #{machineCode},
-          machine_name = #{machineName}
+          machine_name = #{machineName},
+          user_id = #{userId}
         where
           pay_code = #{payCode}
 
