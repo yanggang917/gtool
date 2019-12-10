@@ -7,6 +7,7 @@ import com.cn.gtool.bean.entity.UserDO;
 import com.cn.gtool.bean.entity.UserPayLogDO;
 import com.cn.gtool.service.PayService;
 import com.cn.gtool.service.UserService;
+import com.cn.gtool.util.PayCodeUtils;
 import com.cn.gtool.util.ResJson;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -44,13 +45,13 @@ public class PayController {
         Date date = new Date();
         payDO.setCreateTime(date);
         if (payDO.getPayType() ==1){//日卡
-            payDO.setDayLength(1);
+            payDO.setDayLength(1);//1天
         }
         if (payDO.getPayType() ==2){//周卡
-            payDO.setDayLength(7);
+            payDO.setDayLength(7);//7天
         }
         if (payDO.getPayType() ==3){//月卡
-            payDO.setDayLength(31);
+            payDO.setDayLength(31);//31天
         }
 
         //校验用户是否存在
@@ -64,7 +65,7 @@ public class PayController {
         payDO.setUserId(userDO.getId());
         //循环数量
         for (int i=0; i<payDO.getNum();i++){
-            String payCode = UUID.randomUUID().toString().substring(24);
+            String payCode = PayCodeUtils.generatePayCode(payDO.getPayType());
             payDO.setPayCode(payCode);
             this.payService.add(payDO);
 
