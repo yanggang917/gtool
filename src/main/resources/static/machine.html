@@ -64,17 +64,20 @@
                     <td align="left" class="l-table-edit-td" style="width:160px"><input name="machineCode" type="text" id="machineCode" ltype="text" validate="{required:true}" /></td>
                     <td align="left" class="requiredItem">*</td>
                 </tr>
-                <tr>
+                <tr id="update_tr">
                     <td align="right" class="l-table-edit-td"> 支付码:</td>
                     <td align="left" class="l-table-edit-td" style="width:160px">
                         <input name="payCode" type="text" id="payCode" ltype="text" validate="{required:true}" />
 <!--                        <div id="payCodeDiv"></div>-->
 
-
-
-
                     </td>
                     <td align="left" class="requiredItem">*</td>
+                </tr>
+
+                <tr id="add_tr">
+                    <td colspan="3">
+                        <span style="color: red">首次添加新机器，您可免费试用12个小时哦~</span>
+                    </td>
                 </tr>
             </table><br />
             <input type="submit" value="提交" id="Button1" class="l-button l-button-submit"/>

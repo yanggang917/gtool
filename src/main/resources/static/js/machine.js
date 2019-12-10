@@ -13,6 +13,8 @@ function openmachineDialog(machineId, machineCode, machineName) {
     // alert(machineId+machineName+machineCode);
     ////走修改逻辑
     if (machineId != null){
+        $("#update_tr").show();
+        $("#add_tr").hide();
         $("#machineId").val(machineId);
         $("#machineName").val(machineName);
         $("#machineCode").val(machineCode);
@@ -21,6 +23,8 @@ function openmachineDialog(machineId, machineCode, machineName) {
         $("#tittle_id").html("续期");
     }else {
         //走新增逻辑
+        $("#update_tr").hide();
+        $("#add_tr").show();
         $("#machineName").removeAttr("readonly");
         $("#machineCode").removeAttr("readonly");
         $("#machineId").val("");//清理id
@@ -192,7 +196,8 @@ function addMachine(){
         data = {"machineId":id,"machineCode":machineCode,"payCode":payCode, "userId":uid, "machineName":machineName};
     }else{
         url = "machine/add";
-        data = {"machineCode":machineCode,"payCode":payCode, "userId":uid, "machineName":machineName};
+        // data = {"machineCode":machineCode,"payCode":payCode, "userId":uid, "machineName":machineName};
+        data = {"machineCode":machineCode, "userId":uid, "machineName":machineName};
     }
 
     $.ajax({

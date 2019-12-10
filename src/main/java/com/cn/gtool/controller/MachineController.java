@@ -66,13 +66,13 @@ public class MachineController {
         }
 
         //校验该用户是否拥有这张支付卡
-        PayDO payDO = this.payService.queryByPayCodeAndUserId(addMachineDTO);
-        if (payDO == null){
-            return ResJson.failed(-1, "对不起，您没有这个支付码！");
-        }
-        if (payDO.getIsUsed() == 1){
-            return ResJson.failed(-1, "对不起，您这个支付码已经被使用了，请联系管理员！");
-        }
+//        PayDO payDO = this.payService.queryByPayCodeAndUserId(addMachineDTO);
+//        if (payDO == null){
+//            return ResJson.failed(-1, "对不起，您没有这个支付码！");
+//        }
+//        if (payDO.getIsUsed() == 1){
+//            return ResJson.failed(-1, "对不起，您这个支付码已经被使用了，请联系管理员！");
+//        }
 
 
         MachineDO machineDO = new MachineDO();
@@ -80,13 +80,15 @@ public class MachineController {
 
         Date date = new Date();
         machineDO.setCreateTime(date);
-        machineDO.setEndTime(getAfterDay(date,payDO.getDayLength()));//根据支付码计算
+//        machineDO.setEndTime(getAfterDay(date,payDO.getDayLength()));//根据支付码计算
+        machineDO.setEndTime(getAfterHour(date, 12));//用户首次添加机器码，给予12小时候试用期！
+
 
         //添加机器码
         this.machineService.add(machineDO);
 
         //更新该支付码已被使用啦
-        updatePayCode(addMachineDTO, date);
+//        updatePayCode(addMachineDTO, date);
 
         return ResJson.success();
     }
@@ -181,5 +183,23 @@ public class MachineController {
         }
         return null;
     }
+
+    /**
+     * 想获得N小时之前或M小时之后的时间
+     * @param date
+     * @param hour 之前就传负数
+     * @return
+     */
+    Date getAfterHour(Date date, int hour) {
+        try {
+            Date timeMHour = new Date(date.getTime() + 60 * 60 * 1000 * hour);
+            return timeMHour;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
 }
