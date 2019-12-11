@@ -25,6 +25,7 @@ function openmachineDialog(machineId, machineCode, machineName) {
         //走新增逻辑
         $("#update_tr").hide();
         $("#add_tr").show();
+        $("#payCode").val("0");///假装赋值，骗过校验
         $("#machineName").removeAttr("readonly");
         $("#machineCode").removeAttr("readonly");
         $("#machineId").val("");//清理id
