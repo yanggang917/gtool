@@ -74,6 +74,9 @@ public class MachineController {
 //            return ResJson.failed(-1, "对不起，您这个支付码已经被使用了，请联系管理员！");
 //        }
 
+        if(addMachineDTO.getUserId() == 0){
+            return ResJson.failed("用户未登陆！");
+        }
 
         MachineDO machineDO = new MachineDO();
         BeanUtils.copyProperties(addMachineDTO, machineDO);

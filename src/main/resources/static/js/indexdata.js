@@ -2,14 +2,13 @@
 [
     {text:'机器码管理',url:"machine.html"},
     {text:'我的支付卡',url:"myPay.html"},
-    // {text:'支付卡管理',url:"pay.html"},
-	// {text:'管理员管理',url:"survey.html"}
 ];
 
 var adminIndexdata =
 [
     // {text:'机器码管理',url:"machine.html"},
     {text:'支付管理',url:"pay.html"},
+    {text:'软件上传',url:"soft.html"},
 ];
 
 
