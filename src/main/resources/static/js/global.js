@@ -39,6 +39,7 @@ function isNoTLogin(resp){
 	if(resp==null){
 		alert("您还没有登录，请重新登录哦。");
 		top.location.href = "login.html";
+		return;
 	};
 }	
 

@@ -1,35 +1,36 @@
 package com.cn.gtool.controller;
 
-import com.cn.gtool.util.ResJson;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import com.cn.gtool.bean.entity.SoftDO;
+import com.cn.gtool.service.SoftService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/soft")
 public class SoftController {
+    @Resource
+    private SoftService softService;
 
 
     @RequestMapping(value = "/download", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public void download(HttpServletResponse response) throws FileNotFoundException {
+        //获取最新的软件版本
+        SoftDO softDO = this.softService.getNewSoftVersion();
+        //根据id更新下载次数
+        this.softService.updateDownNum(softDO.getId());
 
-
-        String path = "/Users/yanggang/Desktop/《码出高效：Java开发手册》.pdf";
-        // 下载本地文件
-        String fileName = "xxxx.pdf"; // 文件的默认保存名
+        String path = softDO.getPath()+softDO.getFileName();//"/Users/yanggang/Desktop/《码出高效：Java开发手册》.pdf";
+        // 下载到本地文件的文件名
+        String fileName = softDO.getFileName();//"xxxx.pdf"; // 文件的默认保存名
         // 读到流中
         InputStream inStream = new FileInputStream(path);// 文件的存放路径
         // 设置输出的格式

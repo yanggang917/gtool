@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.gtool.dao.SoftDOMapper">
+
+
+    <select id="getNewSoftVersion" resultType="com.cn.gtool.bean.entity.SoftDO">
+        SELECT
+            a.id,
+            a.file_name as fileName,
+            a.path,
+            a.version,
+            a.create_time as createTime,
+            a.down_num as downNum,
+            a.remark
+        FROM
+            t_soft a
+        where a.del_flag = 0
+        order by a.create_time desc
+        limit 1
+    </select>
+
+    <update id="updateDownNum" parameterType="java.lang.Integer">
+        update t_soft
+        set down_num = down_num + 1
+        where
+          id = #{id}
+    </update>
+
+
+</mapper>

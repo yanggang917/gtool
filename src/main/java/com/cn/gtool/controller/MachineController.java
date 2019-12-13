@@ -84,7 +84,7 @@ public class MachineController {
         Date date = new Date();
         machineDO.setCreateTime(date);
 //        machineDO.setEndTime(getAfterDay(date,payDO.getDayLength()));//根据支付码计算
-        machineDO.setEndTime(getAfterHour(date, 12));//用户首次添加机器码，给予12小时候试用期！
+        machineDO.setEndTime(getAfterHour(date, 2));//用户首次添加机器码，给予2小时候试用期！
 
 
         //添加机器码
