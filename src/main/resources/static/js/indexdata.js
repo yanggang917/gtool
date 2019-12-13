@@ -8,7 +8,7 @@ var adminIndexdata =
 [
     // {text:'机器码管理',url:"machine.html"},
     {text:'支付管理',url:"pay.html"},
-    {text:'软件上传',url:"soft.html"},
+    // {text:'软件上传',url:"soft.html"},
 ];
 
 

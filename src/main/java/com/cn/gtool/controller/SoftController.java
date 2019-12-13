@@ -28,7 +28,7 @@ public class SoftController {
         //根据id更新下载次数
         this.softService.updateDownNum(softDO.getId());
 
-        String path = softDO.getPath()+softDO.getFileName();//"/Users/yanggang/Desktop/《码出高效：Java开发手册》.pdf";
+        String path = softDO.getPath();//"/Users/yanggang/Desktop/《码出高效：Java开发手册》.pdf";
         // 下载到本地文件的文件名
         String fileName = softDO.getFileName();//"xxxx.pdf"; // 文件的默认保存名
         // 读到流中
