@@ -3,8 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+	<script src="js/jquery/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/cookies.js"></script>
+	<style type="text/css">
+		div.doc {
+			position: absolute;
+			top: 1px;
+		}
+
+		#payDiv {
+			/*width:500px;*/
+			/*height:400px;*/
+			margin:3px;
+			display:none;
+			position: absolute;
+			top: 4rem;
+			left: 23rem;
+		}
+
+		#background_Div {
+			background-color: black;
+			filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;
+			width: 100%;
+			height: 100%;
+			top: 0rem;
+			margin: 0rem;
+			position: absolute;
+			display: none;
+
+		}
+	</style>
 </head>
 <body style="background-color: #EAF2FE;">
 	<center><img alt="欢迎进入系统" src="image/welcome.gif"></center>
+	<div class="doc">
+		<h3>软件下载</h3>
+			<ul>
+				<li>
+					<a href="#" style="float: left" onclick="window.location.href='/soft/download/2'">下载若涵3.0</a>
+				</li>
+			</ul>
+		<H3>操作手册</H3>
+			<ul>
+				<li>
+					<a href="#" style="float: left" onclick="window.location.href='/soft/download/1'">下载若涵使用说明</a>
+				</li>
+			</ul>
+		<H3>购买支付卡</H3>
+		<ul>
+			<li>
+				<a href="#" style="float: left" onclick="openPasswordDialog();">点击下单</a>
+			</li>
+			<li>
+				联系管理员QQ：1341103402
+			</li>
+		</ul>
+	</div>
+
+	<div id="background_Div" onclick="$('#payDiv').hide();$('#background_Div').hide();"></div>
+	<div id="payDiv" style="">
+		<img style="width: 16rem;" src="image/pay.jpeg">
+	</div>
+
 </body>
+<script type="text/javascript">
+	function openPasswordDialog(){
+		$("#payDiv").show();
+		$("#background_Div").show();
+	}
+</script>
 </html>

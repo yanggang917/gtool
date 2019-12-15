@@ -3,9 +3,7 @@ package com.cn.gtool.controller;
 import com.cn.gtool.bean.entity.SoftDO;
 import com.cn.gtool.service.SoftService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -20,11 +18,11 @@ public class SoftController {
     private SoftService softService;
 
 
-    @RequestMapping(value = "/download", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/download/{type}", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public void download(HttpServletResponse response) throws FileNotFoundException {
+    public void download(@PathVariable int type, HttpServletResponse response) throws FileNotFoundException {
         //获取最新的软件版本
-        SoftDO softDO = this.softService.getNewSoftVersion();
+        SoftDO softDO = this.softService.getNewSoftVersion(type);
         //根据id更新下载次数
         this.softService.updateDownNum(softDO.getId());
 

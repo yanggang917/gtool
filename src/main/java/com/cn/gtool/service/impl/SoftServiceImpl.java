@@ -13,8 +13,8 @@ public class SoftServiceImpl implements SoftService {
     private SoftDOMapper softDOMapper;
 
     @Override
-    public SoftDO getNewSoftVersion() {
-        return softDOMapper.getNewSoftVersion();
+    public SoftDO getNewSoftVersion(int type) {
+        return softDOMapper.getNewSoftVersion(type);
     }
 
     @Override

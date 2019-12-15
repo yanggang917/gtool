@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SoftDOMapper {
 
 
-    SoftDO getNewSoftVersion();
+    SoftDO getNewSoftVersion(int type);
 
     void updateDownNum(int id);
 }
